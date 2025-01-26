@@ -1,0 +1,77 @@
+/* CSS Specifico per l'Index (index.css) */
+
+/* Video Gallery */
+.video-gallery {
+  background-color: #2e2e3f;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.videos {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Permette ai box di andare uno sotto l'altro se necessario */
+  justify-content: center;
+}
+
+.video-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.video-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.video-box iframe {
+  width: 300px;
+  height: 200px;
+  border-radius: 8px;
+  border: 2px solid #444;
+}
+
+/* Main Content */
+.main-content {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #1e1e2f;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover Effects for Buttons and Links */
+button, .nav-link {
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+button:hover, .nav-link:hover {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
+/* Typography */
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #d1d1d1;
+}
+
+/* Spacing */
+.container {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Colors */
+a {
+  color: #00bcd4;
+}
+
+a:hover {
+  color: #fff;
+}
