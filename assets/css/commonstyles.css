@@ -1,5 +1,5 @@
 /* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap');
 
 /* General Styles */
 body {
@@ -15,7 +15,7 @@ body {
   background: url('../images/banner-image.jpg') center/cover no-repeat;
   color: #fff;
   text-align: center;
-  padding: 100px 20px; /* Aumenta il padding verticale per rendere il banner più alto */
+  padding: 50px 20px 70px 20px; /* Riduci il padding superiore per rendere il banner più basso */
   position: fixed; /* Banner fisso in alto */
   top: 0;
   left: 0;
@@ -27,13 +27,86 @@ body {
   justify-content: flex-end;
 }
 
+/* Stili per il titolo animato */
+.animated-title {
+  font-family: 'Syne Mono', monospace; /* Applica il nuovo font */
+  font-size: 4rem; /* Aumenta la dimensione del font per una migliore visibilità */
+  color: #ffffff; /* Colore del testo */
+  text-align: center; /* Centra il testo */
+  margin: 0; /* Rimuove il margine */
+  padding: 20px; /* Aggiunge un padding per migliorare la spaziatura */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Aggiunge un'ombra al testo */
+  overflow: hidden; /* Nasconde il testo che esce dal contenitore */
+  white-space: nowrap; /* Impedisce al testo di andare a capo */
+  border-right: 0.15em solid #ffffff; /* Aggiunge un cursore di scrittura */
+  animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite; /* Aggiunge animazioni */
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #ffffff; }
+}
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes colorChange {
+  0% {
+    color: #ffffff;
+  }
+  25% {
+    color: #00bcd4;
+  }
+  50% {
+    color: #ff4081;
+  }
+  75% {
+    color: #ffeb3b;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
+
+@keyframes scaleUp {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Stili per il canvas del banner */
+#bannerCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Posiziona il canvas dietro il contenuto del banner */
+}
+
 /* Navbar */
 .nav-menu {
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
-  padding: 15px 25px;
+  padding: 10px 20px; /* Riduci il padding verticale per rendere la navbar più bassa */
   position: absolute; /* Navbar fissa sotto il banner */
   bottom: 0; /* Posiziona la navbar al margine inferiore del banner */
   left: 0;
@@ -73,6 +146,7 @@ body {
 .nav-menu .nav-link.active {
   color: #00bcd4;
   background-color: rgba(0, 188, 212, 0.2);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 /* Responsive Styles */
@@ -148,29 +222,6 @@ body {
 }
 
 /* Animations */
-@keyframes fadeInSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animated-title {
-  animation: fadeInSlideUp 1s ease-in-out;
-  font-family: 'Rubik Vinyl', cursive; /* Apply the new font */
-  font-size: 2.5rem; /* Adjust font size for better readability */
-  color: #000000; /* Ensure the text color is readable */
-  text-align: center; /* Center the text */
-  width: 100%; /* Make the title cover the full width */
-  box-sizing: border-box; /* Include padding in the element's total width */
-  text-shadow: 4px 4px 4px rgba(255, 255, 255, 0.5); /* Add a subtle text shadow */
-  -webkit-text-stroke: 0.5px #000000; /* Add a white border to the text */
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -186,15 +237,47 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Footer */
+/* Animazione di caricamento */
+#loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  z-index: 1000;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+body.loading #loader {
+  display: block;
+}
+
+body.loaded #loader {
+  display: none;
+}
+
+/* Footer fisso */
 footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background-color: #2e2e3f;
   color: #d1d1d1;
   text-align: center;
-  padding: 10px 0; /* Riduce il padding verticale per rendere il footer più stretto */
-  width: 100%;
+  padding: 0.5 0; /* Riduci ulteriormente il padding verticale per rendere il footer più corto */
   border-top: 2px solid #444;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+  font-size: 0.6rem; /* Riduci la dimensione del carattere */
+  line-height: 1; /* Riduci l'interlinea */
 }
 
 footer a {
@@ -204,4 +287,43 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+/* Margine inferiore per fare spazio al footer fisso */
+.main-content {
+  margin-bottom: 50px; /* Aggiungi un margine inferiore sufficiente per fare spazio al footer */
+}
+
+/* Stili per la sezione Video Gallery */
+.video-gallery {
+  padding: 40px 20px;
+  background-color: #2e2e3f;
+  color: #ffffff;
+  text-align: center;
+}
+
+.video-gallery h2 {
+  font-family: 'Syne Mono', monospace; /* Applica il nuovo font */
+  font-size: 2.5rem; /* Dimensione del font */
+  margin-bottom: 20px; /* Spaziatura inferiore */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Aggiunge un'ombra al testo */
+}
+
+.videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Layout a griglia responsivo */
+  gap: 20px; /* Spaziatura tra i video */
+}
+
+.video-box {
+  background-color: #1e1e2f;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.video-box iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
 }

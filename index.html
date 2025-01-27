@@ -1,85 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Little Science Things</title>
-        <link rel="stylesheet" href="assets/css/commonstyles.css">  <!-- Aggiungi il CSS comune -->
-        <link rel="stylesheet" href="assets/css/styles.css">          <!-- Aggiungi il CSS specifico per la homepage -->
-        <link rel="icon" href="assets/icons/favicon.ico">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Little Science Things</title>
+  <link rel="stylesheet" href="assets/css/commonstyles.css">  <!-- Aggiungi il CSS comune -->
+  <link rel="stylesheet" href="assets/css/styles.css">          <!-- Aggiungi il CSS specifico per la homepage -->
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet"> <!-- Aggiungi il font Syne Mono -->
+</head>
 <body>
   <div id="progress-bar-container">
     <div id="progress-bar"></div>
   </div>
 
   <header id="banner" class="banner">
+    <canvas id="bannerCanvas"></canvas>
     <h1 class="animated-title">Explore the Wonders of Science</h1>
-      <!-- Navbar -->
-        <nav class="nav-menu">
-          <ul>
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="timeline.html" class="nav-link">Timeline</a></li>
-          </ul>
-         </nav>
+    <!-- Navbar -->
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+      </ul>
+    </nav>
   </header>
-
-
 
   <main class="main-content">
     <section id="videos" class="video-gallery">
-        <h2>Video Gallery</h2>
-        <div class="videos">
-            <div class="video-box">
-                <iframe src="https://www.youtube.com/shorts/9NX8_JBBFSw" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-box">
-                <iframe src="https://www.youtube.com/shorts/A5vIfIJ1ktM" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-box">
-                <iframe src="https://www.youtube.com/shorts/3cYz8doYLRA" frameborder="0" allowfullscreen></iframe>
-            </div>
+      <h2>Video Gallery</h2>
+      <div class="videos">
+        <div class="video-box">
+          <iframe src="https://www.youtube.com/shorts/9NX8_JBBFSw" frameborder="0" allowfullscreen></iframe>
         </div>
+        <div class="video-box">
+          <iframe src="https://www.youtube.com/shorts/A5vIfIJ1ktM" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-box">
+          <iframe src="https://www.youtube.com/shorts/3cYz8doYLRA" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
     </section>
     <section id="about">
-        <h2>About Us</h2>
-        <p>Welcome to Little Science Things! Dive into the fascinating world of science with us.</p>
+      <h2>About Us</h2>
+      <p>Welcome to Little Science Things! Dive into the fascinating world of science with us.</p>
     </section>
 
     <hr>
 
     <section id="contact">
-        <h2 style="text-align: center;">Contact</h2>
-        <p style="text-align: center;">Follow us on our social channels:</p>
-        <div class="social-icons" style="text-align: center;">
-            <a href="https://www.tiktok.com/@littlesciencethings?lang=it-IT" target="_blank" aria-label="TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UCcc2shjZSk7l0epgAaqRSKQ" target="_blank" aria-label="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://www.instagram.com/littlesciencethings/reels/" target="_blank" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
+      <h2 style="text-align: center;">Contact</h2>
+      <p style="text-align: center;">Follow us on our social channels:</p>
+      <div class="social-icons" style="text-align: center;">
+        <a href="https://www.tiktok.com/@littlesciencethings?lang=it-IT" target="_blank" aria-label="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.youtube.com/channel/UCcc2shjZSk7l0epgAaqRSKQ" target="_blank" aria-label="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.instagram.com/littlesciencethings/reels/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
     </section>
 
     <!-- AdSense Footer Ad -->
     <div class="footer-ad">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-4985292105025600"
-             data-ad-slot="1234567890" 
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4985292105025600"
+           data-ad-slot="1234567890" 
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </div>
-
   </main>
 
   <footer>
@@ -87,6 +88,6 @@
     <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
