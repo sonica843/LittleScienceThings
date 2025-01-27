@@ -1,10 +1,10 @@
-// Wait for the DOM content to load
 document.addEventListener("DOMContentLoaded", () => {
   const animatedTitle = document.querySelector(".animated-title");
   const banner = document.getElementById("banner");
   const navMenu = document.querySelector(".nav-menu");
   const navLinks = document.querySelectorAll(".nav-menu a");
   const sections = document.querySelectorAll("section");
+  const header = document.querySelector(".header");
 
   animatedTitle.classList.add("start-animation");
 
@@ -58,6 +58,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Scroll event to highlight active navbar link
   window.addEventListener("scroll", setActiveLink);
+
+  // Funzione per la gestione dello scroll
+  let lastScrollTop = 0;
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+      // Scroll verso il basso (applica l'effetto di riduzione)
+      banner.classList.add("shrink");
+      banner.classList.remove("shrink-reversed");
+    } else {
+      // Scroll verso l'alto (applica l'effetto di reingrandimento)
+      banner.classList.add("shrink-reversed");
+      banner.classList.remove("shrink");
+    }
+
+    // Aggiorna la posizione dello scroll
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  });
 
   // Animazione del canvas del banner
   const canvas = document.getElementById('bannerCanvas');
@@ -119,4 +139,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   init();
   animate();
+
+  // Toggle menu for mobile devices
+  const menuToggle = document.createElement('div');
+  menuToggle.classList.add('menu-toggle');
+  menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+  banner.appendChild(menuToggle);
+
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+  });
+
+  // Rimuovi la classe 'initial' dopo un breve ritardo per mostrare l'effetto di ingrandimento iniziale
+  setTimeout(() => {
+    banner.classList.remove("initial");
+  }, 2000); // 2 secondi di ritardo
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      header.classList.add("shrink");
+      banner.classList.add("shrink");
+      navMenu.classList.add("shrink");
+    } else {
+      header.classList.remove("shrink");
+      banner.classList.remove("shrink");
+      navMenu.classList.remove("shrink");
+    }
+  });
 });

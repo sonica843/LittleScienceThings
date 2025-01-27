@@ -15,7 +15,7 @@ body {
   background: url('../images/banner-image.jpg') center/cover no-repeat;
   color: #fff;
   text-align: center;
-  padding: 50px 20px 70px 20px; /* Riduci il padding superiore per rendere il banner più basso */
+  padding: 50px 20px 100px 20px; /* Aumenta il padding sotto il titolo animato */
   position: fixed; /* Banner fisso in alto */
   top: 0;
   left: 0;
@@ -25,6 +25,23 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  transition: padding 0.3s ease, height 0.3s ease; /* Aggiunge una transizione morbida */
+}
+
+#banner.shrink {
+  padding: 20px 20px; /* Riduce il padding del banner */
+  height: 100px; /* Altezza ridotta per lo scroll */
+}
+
+#banner .animated-title {
+  font-size: 3rem; /* Dimensione iniziale del titolo */
+  transition: font-size 0.3s ease, transform 0.3s ease; /* Transizione morbida per la dimensione del font e la posizione */
+}
+
+#banner.shrink .animated-title {
+  font-size: 2rem; /* Riduci la dimensione del titolo animato */
+  transform: translateY(-20px); /* Sposta leggermente il titolo verso l'alto */
+  padding: 10px;
 }
 
 /* Stili per il titolo animato */
@@ -52,44 +69,6 @@ body {
   50% { border-color: #ffffff; }
 }
 
-@keyframes fadeInSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes colorChange {
-  0% {
-    color: #ffffff;
-  }
-  25% {
-    color: #00bcd4;
-  }
-  50% {
-    color: #ff4081;
-  }
-  75% {
-    color: #ffeb3b;
-  }
-  100% {
-    color: #ffffff;
-  }
-}
-
-@keyframes scaleUp {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
 /* Stili per il canvas del banner */
 #bannerCanvas {
   position: absolute;
@@ -106,7 +85,7 @@ body {
   justify-content: center;
   align-items: center;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
-  padding: 10px 20px; /* Riduci il padding verticale per rendere la navbar più bassa */
+  padding: 10px 20px; /* Padding originale della navbar */
   position: absolute; /* Navbar fissa sotto il banner */
   bottom: 0; /* Posiziona la navbar al margine inferiore del banner */
   left: 0;
@@ -115,6 +94,12 @@ body {
   border-bottom: 2px solid #444;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   margin-top: 0; /* Rimuove il margine superiore */
+  transition: padding 0.3s ease, font-size 0.3s ease; /* Aggiunge una transizione morbida */
+}
+
+.nav-menu.shrink {
+  padding: 8px 20px; /* Riduce leggermente il padding della navbar */
+  font-size: 0.8rem; /* Riduce ulteriormente la dimensione del testo del menu */
 }
 
 .nav-menu ul {
@@ -149,6 +134,67 @@ body {
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
+/* Menu Toggle Button */
+.menu-toggle {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 12;
+}
+
+/* Close Menu Button */
+.close-menu {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 13; /* Assicurati che il pulsante di chiusura sia sopra il menu */
+}
+
+/* Navbar aperta sui dispositivi mobili */
+.nav-menu.open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  overflow-y: auto;
+}
+
+.nav-menu.open .close-menu {
+  display: block; /* Mostra il pulsante di chiusura quando il menu è aperto */
+}
+
+.nav-menu.open ul {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-menu.open .nav-link {
+  font-size: 1.5rem;
+  padding: 15px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.nav-menu.open .nav-link:hover,
+.nav-menu.open .nav-link.active {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
 /* Responsive Styles */
 
 /* Tablet (768px and below) */
@@ -165,10 +211,15 @@ body {
 
   /* Navbar: switch to vertical layout */
   .nav-menu {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    top: auto; /* Let it flow naturally under the banner */
+    display: none; /* Nascondi la navbar per i dispositivi mobili */
+  }
+
+  .menu-toggle {
+    display: block; /* Mostra il pulsante del menu toggle */
+  }
+
+  .nav-menu.open {
+    display: flex; /* Mostra la navbar quando è aperta */
   }
 
   .nav-menu ul {
@@ -184,6 +235,11 @@ body {
     font-size: 0.9rem;
     padding: 10px;
   }
+
+  /* Riduci la dimensione del titolo */
+  .animated-title {
+    font-size: 2.5rem; /* Riduci la dimensione del font per i tablet */
+  }
 }
 
 /* Smartphone (480px and below) */
@@ -197,6 +253,11 @@ body {
   .nav-menu .nav-link {
     font-size: 0.8rem;
     padding: 8px;
+  }
+
+  /* Riduci ulteriormente la dimensione del titolo */
+  .animated-title {
+    font-size: 2rem; /* Riduci la dimensione del font per gli smartphone */
   }
 
   /* Additional tweaks if needed for extremely small devices */
@@ -273,10 +334,10 @@ footer {
   background-color: #2e2e3f;
   color: #d1d1d1;
   text-align: center;
-  padding: 0.5 0; /* Riduci ulteriormente il padding verticale per rendere il footer più corto */
+  padding: 0.7 0; /* Riduci ulteriormente il padding verticale per rendere il footer più corto */
   border-top: 2px solid #444;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-  font-size: 0.6rem; /* Riduci la dimensione del carattere */
+  font-size: 0.7rem; /* Riduci la dimensione del carattere */
   line-height: 1; /* Riduci l'interlinea */
 }
 
@@ -294,36 +355,45 @@ footer a:hover {
   margin-bottom: 50px; /* Aggiungi un margine inferiore sufficiente per fare spazio al footer */
 }
 
-/* Stili per la sezione Video Gallery */
-.video-gallery {
-  padding: 40px 20px;
-  background-color: #2e2e3f;
-  color: #ffffff;
-  text-align: center;
+/* Aggiunta per la riduzione dell'intestazione durante lo scroll */
+#banner.shrink {
+  padding: 20px 20px; /* Riduce il padding del banner */
+  transition: padding 0.3s ease; /* Aggiunge una transizione morbida */
 }
 
-.video-gallery h2 {
-  font-family: 'Syne Mono', monospace; /* Applica il nuovo font */
-  font-size: 2.5rem; /* Dimensione del font */
-  margin-bottom: 20px; /* Spaziatura inferiore */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Aggiunge un'ombra al testo */
+.nav-menu.shrink {
+  padding: 5px 20px; /* Riduce il padding della navbar */
+  transition: padding 0.3s ease; /* Aggiunge una transizione morbida */
 }
 
-.videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Layout a griglia responsivo */
-  gap: 20px; /* Spaziatura tra i video */
+header {
+  height: 100px; /* Altezza originale dell'header */
+  transition: height 0.3s ease, padding 0.3s ease;
 }
 
-.video-box {
-  background-color: #1e1e2f;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+header.shrink {
+  height: 70px; /* Altezza ridotta dell'header */
+  padding: 10px 20px; /* Riduci il padding per adattare l'header ridotto */
 }
 
-.video-box iframe {
-  width: 100%;
-  height: 200px;
-  border-radius: 10px;
+header .title {
+  font-size: 2rem; /* Dimensione originale del titolo */
+  transition: font-size 0.3s ease;
+}
+
+header.shrink .title {
+  font-size: 1.5rem; /* Riduci la dimensione del titolo */
+}
+
+header .nav-menu {
+  font-size: 1rem; /* Dimensione originale del testo del menu */
+  transition: font-size 0.3s ease;
+}
+
+header.shrink .nav-menu {
+  font-size: 0.9rem; /* Riduci la dimensione del testo del menu */
+}
+
+header.shrink .nav-menu {
+  font-size: 0.8rem; /* Riduci ulteriormente la dimensione del testo del menu */
 }

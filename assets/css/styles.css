@@ -27,11 +27,22 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.video-box iframe {
+.video-box iframe, .video-box blockquote {
   width: 300px;
-  height: 200px;
+  height: 400px; /* Altezza ridotta per adattarsi ai diversi formati video */
   border-radius: 8px;
   border: 2px solid #444;
+}
+
+/* Rimuovere o modificare il bordo bianco del video di Instagram */
+.instagram-media {
+  border: none !important;
+  background: none !important;
+}
+
+.instagram-media div {
+  border: none !important;
+  background: none !important;
 }
 
 /* Main Content */
@@ -74,4 +85,41 @@ a {
 
 a:hover {
   color: #fff;
+}
+
+/* Stili per la sezione About Us */
+.about-section {
+  padding: 40px 20px;
+  color: #ffffff;
+  margin: 20px 0;
+}
+
+.about-section h2 {
+  font-family: 'Syne Mono', monospace;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.about-section h3 {
+  font-family: 'Syne Mono', monospace;
+  font-size: 1.8rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.about-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Stili per il tag <hr> */
+.styled-hr {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, #00bcd4, #ff4081);
+  margin: 40px 0;
+  border-radius: 5px;
 }
