@@ -20,6 +20,8 @@
   overflow: hidden;
   border-radius: 8px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  width: 300px; /* Larghezza uniforme per tutti i box video */
+  height: 400px; /* Altezza uniforme per tutti i box video */
 }
 
 .video-box:hover {
@@ -28,8 +30,8 @@
 }
 
 .video-box iframe, .video-box blockquote {
-  width: 300px;
-  height: 400px; /* Altezza ridotta per adattarsi ai diversi formati video */
+  width: 100%; /* Adatta il contenuto alla larghezza del box */
+  height: 100%; /* Adatta il contenuto all'altezza del box */
   border-radius: 8px;
   border: 2px solid #444;
 }
@@ -89,9 +91,15 @@ a:hover {
 
 /* Stili per la sezione About Us */
 .about-section {
-  padding: 40px 20px;
-  color: #ffffff;
-  margin: 20px 0;
+  text-align: justify; /* Giustifica il testo */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ 
+
+}
+
+.about-section h2, .about-section h3 {
+  text-align: center; /* Centra i titoli */
 }
 
 .about-section h2 {
@@ -112,7 +120,7 @@ a:hover {
 .about-section p {
   font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 15px;
+  margin-bottom: 1em;
 }
 
 /* Stili per il tag <hr> */
