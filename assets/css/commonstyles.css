@@ -7,41 +7,75 @@ body {
   font-family: Arial, sans-serif;
   color: #d1d1d1;
   background-color: #1e1e2f;
-  padding-top: 220px; /* Spazio per il banner e la navbar */
+  padding-top: 350px; /* Spazio per il banner */
+
 }
 
 /* Banner */
 #banner {
-  background: url('../images/banner-image.jpg') center/cover no-repeat;
-  color: #fff;
-  text-align: center;
-  padding: 50px 20px 100px 20px; /* Aumenta il padding sotto il titolo animato */
   position: fixed; /* Banner fisso in alto */
   top: 0;
   left: 0;
   width: 100%;
+  height: 100vh; /* Altezza del banner uguale all'altezza della finestra */
   z-index: 10;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  transition: padding 0.3s ease, height 0.3s ease; /* Aggiunge una transizione morbida */
+  justify-content: center; /* Centra verticalmente il contenuto */
+  align-items: center; /* Centra orizzontalmente il contenuto */
+  transition: padding 0.8s ease-in-out, height 0.8s ease-in-out; /* Aumenta la durata delle transizioni */
+  }
+
+#banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/banner-image.jpg') center/cover no-repeat;
+  z-index: -1;
+}
+
+#banner::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%; /* Altezza del gradiente */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(30, 30, 47, 1) 100%);
+  z-index: -1;
+}
+
+#banner.initial::before {
+  background-size: 150%; /* Ingrandisce l'immagine di background all'apertura */
 }
 
 #banner.shrink {
-  padding: 20px 20px; /* Riduce il padding del banner */
-  height: 100px; /* Altezza ridotta per lo scroll */
+  padding: 20px 20px; /* Riduci il padding del banner */
+  height: 172px; /* Altezza ridotta */
+  
 }
 
 #banner .animated-title {
-  font-size: 3rem; /* Dimensione iniziale del titolo */
-  transition: font-size 0.3s ease, transform 0.3s ease; /* Transizione morbida per la dimensione del font e la posizione */
+  font-size: 4rem; /* Dimensione iniziale del titolo */
+  margin-top: 0px; /* Posiziona il titolo più in alto */
+  margin-bottom: 20px; /* Aggiungi margine sotto la scritta animata */
+  transition: font-size 0.8s ease-in-out, transform 0.8s ease-in-out; /* Aumenta la durata delle transizioni */
+}
+
+#banner.initial .animated-title {
+  transform: translateY(0); /* Mantiene il titolo nella posizione iniziale */
 }
 
 #banner.shrink .animated-title {
-  font-size: 2rem; /* Riduci la dimensione del titolo animato */
-  transform: translateY(-20px); /* Sposta leggermente il titolo verso l'alto */
-  padding: 10px;
+  font-size: 2rem; /* Riduci la dimensione del titolo */
+  transform: translateY(-50%); /* Sposta il titolo verso l'alto e centrarlo */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Stili per il titolo animato */
@@ -79,27 +113,49 @@ body {
   z-index: -1; /* Posiziona il canvas dietro il contenuto del banner */
 }
 
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #fff;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
 /* Navbar */
 .nav-menu {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
-  padding: 10px 20px; /* Padding originale della navbar */
-  position: absolute; /* Navbar fissa sotto il banner */
-  bottom: 0; /* Posiziona la navbar al margine inferiore del banner */
+  background: #333; /* Cambia il colore di sfondo della navbar */
+  padding: 30px 20px; /* Aumenta l'altezza della navbar */
+  position: fixed; /* Navbar fissa */
+  top: 100vh; /* Posiziona la navbar sotto il banner */
   left: 0;
   width: 100%;
   z-index: 11; /* Assicurati che la navbar sia sopra il banner */
-  border-bottom: 2px solid #444;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  margin-top: 0; /* Rimuove il margine superiore */
-  transition: padding 0.3s ease, font-size 0.3s ease; /* Aggiunge una transizione morbida */
+  transition: padding 0.8s ease-in-out, font-size 0.8s ease-in-out, top 0.8s ease-in-out; /* Aumenta la durata delle transizioni */
 }
 
 .nav-menu.shrink {
-  padding: 8px 20px; /* Riduce leggermente il padding della navbar */
-  font-size: 0.8rem; /* Riduce ulteriormente la dimensione del testo del menu */
+  padding: 20px 20px; /* Riduce il padding della navbar */
+  font-size: 0.8rem; /* Riduce la dimensione del testo del menu */
+  top: 150px; /* Posiziona la navbar sotto il banner ridotto */
 }
 
 .nav-menu ul {
@@ -144,18 +200,6 @@ body {
   color: #ffffff;
   cursor: pointer;
   z-index: 12;
-}
-
-/* Close Menu Button */
-.close-menu {
-  display: none;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 2rem;
-  color: #ffffff;
-  cursor: pointer;
-  z-index: 13; /* Assicurati che il pulsante di chiusura sia sopra il menu */
 }
 
 /* Navbar aperta sui dispositivi mobili */
@@ -205,7 +249,7 @@ body {
 
   /* Adjust the banner for smaller screens */
   #banner {
-    padding: 40px 15px;
+    padding: 80px 15px; /* Aumenta il padding inferiore per rendere il banner più grande sotto */
     text-align: center;
   }
 
@@ -358,17 +402,17 @@ footer a:hover {
 /* Aggiunta per la riduzione dell'intestazione durante lo scroll */
 #banner.shrink {
   padding: 20px 20px; /* Riduce il padding del banner */
-  transition: padding 0.3s ease; /* Aggiunge una transizione morbida */
+  transition: padding 0.8s ease-in-out; /* Aggiunge una transizione morbida */
 }
 
 .nav-menu.shrink {
   padding: 5px 20px; /* Riduce il padding della navbar */
-  transition: padding 0.3s ease; /* Aggiunge una transizione morbida */
+  transition: padding 0.8s ease-in-out; /* Aggiunge una transizione morbida */
 }
 
 header {
   height: 100px; /* Altezza originale dell'header */
-  transition: height 0.3s ease, padding 0.3s ease;
+  transition: height 0.8s ease-in-out, padding 0.8s ease-in-out;
 }
 
 header.shrink {
@@ -378,7 +422,7 @@ header.shrink {
 
 header .title {
   font-size: 2rem; /* Dimensione originale del titolo */
-  transition: font-size 0.3s ease;
+  transition: font-size 0.8s ease-in-out;
 }
 
 header.shrink .title {
@@ -387,7 +431,7 @@ header.shrink .title {
 
 header .nav-menu {
   font-size: 1rem; /* Dimensione originale del testo del menu */
-  transition: font-size 0.3s ease;
+  transition: font-size 0.8s ease-in-out;
 }
 
 header.shrink .nav-menu {
@@ -396,4 +440,31 @@ header.shrink .nav-menu {
 
 header.shrink .nav-menu {
   font-size: 0.8rem; /* Riduci ulteriormente la dimensione del testo del menu */
+}
+
+/* About Section */
+.about-section {
+  text-align: justify; /* Giustifica il testo */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h2, .about-section h3 {
+  text-align: center; /* Centra i titoli */
+}
+
+.about-section p {
+  margin-bottom: 1em;
+}
+
+/* Canvas */
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Posiziona il canvas dietro il contenuto */
 }

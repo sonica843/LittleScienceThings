@@ -1,30 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const animatedTitle = document.querySelector(".animated-title");
-  const banner = document.getElementById("banner");
-  const navMenu = document.querySelector(".nav-menu");
-  const navLinks = document.querySelectorAll(".nav-menu a");
-  const sections = document.querySelectorAll("section");
-  const header = document.querySelector(".header");
+  const elements = {
+    animatedTitle: document.querySelector(".animated-title"),
+    banner: document.getElementById("banner"),
+    navMenu: document.querySelector(".nav-menu"),
+    navLinks: document.querySelectorAll(".nav-menu a"),
+    sections: document.querySelectorAll("section"),
+    header: document.querySelector(".header")
+  };
 
-  animatedTitle.classList.add("start-animation");
+  elements.animatedTitle.classList.add("start-animation");
+
+  // Banner starts with 'initial' class for a reduced state on load
+  elements.banner.classList.add('initial');
+
+  // Immediately expand the banner to full screen
+  setTimeout(() => {
+    elements.banner.classList.remove('initial');
+    elements.banner.classList.add('expanded');
+    elements.navMenu.style.display = "flex"; // Show the navigation menu
+  }, 0); // No delay since we want this to happen immediately
 
   // Smooth scroll for navigation links
-  navLinks.forEach(link => {
-    link.addEventListener("click", event => {
-      const targetId = link.getAttribute("href").substring(1);
-
-      // If the link is for the timeline page, redirect instead of scrolling
-      if (targetId === "timeline") {
-        return; // Allow the default behavior (opening the timeline page)
-      }
-
-      event.preventDefault(); // Prevent default behavior for internal links
-      const targetSection = document.getElementById(targetId);
-
-      if (targetSection) {
-        window.scrollTo({
-          top: targetSection.offsetTop - 70, // Adjust for header height
-          behavior: "smooth",
+  elements.navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth"
         });
       }
     });
@@ -32,109 +35,106 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Highlight the active section in the navbar and animate sections
   const setActiveLink = () => {
-    let currentSection = "";
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100; // Adjust for fixed navbar
-      if (window.pageYOffset >= sectionTop) {
-        currentSection = section.getAttribute("id");
-      }
-    });
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href").substring(1) === currentSection) {
-        link.classList.add("active");
-      }
-    });
+    let index = elements.sections.length;
+
+    while (--index && window.scrollY + 50 < elements.sections[index].offsetTop) {}
+    
+    elements.navLinks.forEach((link) => link.classList.remove("active"));
+    if (elements.navLinks[index]) {
+      elements.navLinks[index].classList.add("active");
+    }
   };
 
-  // Show progress bar on page load
-  window.addEventListener("load", () => {
-    const progressBar = document.getElementById("progress-bar");
-    progressBar.style.width = "100%";
-    setTimeout(() => {
-      document.getElementById("progress-bar-container").style.display = "none";
-    }, 1000);
-  });
-
-  // Scroll event to highlight active navbar link
-  window.addEventListener("scroll", setActiveLink);
-
-  // Funzione per la gestione dello scroll
-  let lastScrollTop = 0;
-
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll > lastScrollTop) {
-      // Scroll verso il basso (applica l'effetto di riduzione)
-      banner.classList.add("shrink");
-      banner.classList.remove("shrink-reversed");
+  // Function to handle scroll
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const isScrolled = scrollY > 50;
+    
+    elements.header.classList.toggle("shrink", isScrolled);
+    
+    if (isScrolled) {
+      elements.banner.classList.add("shrink");
+      elements.banner.classList.remove("expanded");
+      elements.navMenu.classList.add("shrink");
     } else {
-      // Scroll verso l'alto (applica l'effetto di reingrandimento)
-      banner.classList.add("shrink-reversed");
-      banner.classList.remove("shrink");
+      elements.banner.classList.remove("shrink");
+      elements.banner.classList.add("expanded");
+      elements.navMenu.classList.remove("shrink");
     }
+    
+    setActiveLink();
+  };
 
-    // Aggiorna la posizione dello scroll
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-  });
+  // Use one scroll event listener for all scroll-related actions
+  window.addEventListener("scroll", handleScroll);
+
+  // Show progress bar on page load
+  window.addEventListener("load", handleScroll);
 
   // Animazione del canvas del banner
-  const canvas = document.getElementById('bannerCanvas');
+  const canvas = document.getElementById('particle-canvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const particlesArray = [];
-  const numberOfParticles = 100;
+  let particlesArray;
 
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5; // Dimensione delle particelle ridotta
-      this.speedX = Math.random() * 1.5 - 0.75; // Velocità ridotta
-      this.speedY = Math.random() * 1.5 - 0.75; // Velocità ridotta
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
+  window.addEventListener('resize', function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+  });
 
-      // Rigenera la particella se esce dallo schermo
-      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5; // Dimensione delle particelle ridotta
-        this.speedX = Math.random() * 1.5 - 0.75; // Velocità ridotta
-        this.speedY = Math.random() * 1.5 - 0.75; // Velocità ridotta
-      }
-    }
-    draw() {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.fill();
-    }
+  function Particle(x, y, directionX, directionY, size, color) {
+    this.x = x;
+    this.y = y;
+    this.directionX = directionX;
+    this.directionY = directionY;
+    this.size = size;
+    this.color = color;
   }
+
+  Particle.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  };
+
+  Particle.prototype.update = function() {
+    if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+      this.directionX = -this.directionX;
+    }
+    if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+      this.directionY = -this.directionY;
+    }
+    this.x += this.directionX;
+    this.y += this.directionY;
+    this.draw();
+  };
 
   function init() {
+    particlesArray = [];
+    let numberOfParticles = (canvas.height * canvas.width) / 9000;
     for (let i = 0; i < numberOfParticles; i++) {
-      particlesArray.push(new Particle());
-    }
-  }
+      let size = (Math.random() * 2) + 0.5; // Reduce particle size further
+      let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+      let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+      let directionX = (Math.random() * 2) - 1;
+      let directionY = (Math.random() * 2) - 1;
+      let color = '#ffffff';
 
-  function handleParticles() {
-    for (let i = 0; i < particlesArray.length; i++) {
-      particlesArray[i].update();
-      particlesArray[i].draw();
+      particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
     }
   }
 
   function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    handleParticles();
     requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].update();
+    }
   }
 
   init();
@@ -144,26 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.createElement('div');
   menuToggle.classList.add('menu-toggle');
   menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-  banner.appendChild(menuToggle);
+  elements.banner.appendChild(menuToggle);
 
   menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('open');
-  });
-
-  // Rimuovi la classe 'initial' dopo un breve ritardo per mostrare l'effetto di ingrandimento iniziale
-  setTimeout(() => {
-    banner.classList.remove("initial");
-  }, 2000); // 2 secondi di ritardo
-
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      header.classList.add("shrink");
-      banner.classList.add("shrink");
-      navMenu.classList.add("shrink");
-    } else {
-      header.classList.remove("shrink");
-      banner.classList.remove("shrink");
-      navMenu.classList.remove("shrink");
-    }
+    elements.navMenu.classList.toggle('open');
   });
 });
