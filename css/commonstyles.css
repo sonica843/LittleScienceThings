@@ -1,0 +1,282 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap'); /* Nuovo font aggiunto */
+
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #d1d1d1;
+  background-color: #1e1e2f;
+  padding-top: 0;
+}
+
+/* Banner */
+#banner {
+  background: 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(30, 30, 47, 1) 100%), 
+    url('../images/banner-image.jpg') center/cover no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 100px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#banner.expanded {
+  height: 100vh; /* Altezza massima */
+  background-size: cover;
+}
+
+
+/* Quando il banner si restringe */
+#banner.banner-shrink {
+  background: 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(30, 30, 47, 1) 100%), 
+    url('../images/banner-image.jpg') center/cover no-repeat;
+  height: 140px;
+  padding: 20px 0;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+
+
+/* Navbar */
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+  padding: 10px 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 11;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Bordo sottile con opacità */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Ombra più marcata */
+  transition: all 0.3s ease-out; /* Questa transizione è per quando diventa "fixed" */
+  opacity: 0; /* Inizialmente nascosta */
+  transform: translateY(-100%); /* Sposta sopra il banner */
+  background: rgba(0, 0, 0, 0.7); /* Sfondo semi-trasparente */
+  transition: all 0.3s ease-out;
+}
+
+
+.nav-menu.fixed {
+  opacity: 1; /* Mostra quando è fissa */
+  transform: translateY(0%); /* Posizione normale */
+  top: 152px;
+}
+
+/* Navbar visibile sopra la video gallery quando si fa scroll */
+.nav-menu.fixed {
+  position: fixed;
+  top: 140px; /* Posiziona sotto il banner quando si è scrollato */
+}
+
+.video-gallery {
+  margin-top: calc(100vh - 120px); /* Altezza banner *altezza banner ridotta banner* - altezza navbar */ /* Altezza banner *altezza banner ridotta banner* - altezza navbar */
+  transition: margin-top 0.5s ease-in-out;
+}
+
+.nav-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-menu li {
+  margin: 0 15px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
+.nav-menu .nav-link.active {
+  color: #00bcd4;
+  background-color: rgba(0, 188, 212, 0.2);
+}
+
+/* Responsive Styles */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  body {
+    padding-top: 180px; /* Adjust padding for smaller screens */
+  }
+
+  /* Adjust the banner for smaller screens */
+  #banner {
+    padding: 40px 15px;
+    text-align: center;
+  }
+
+  /* Navbar: switch to vertical layout */
+  .nav-menu {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    top: auto; /* Let it flow naturally under the banner */
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-menu li {
+    margin: 10px 0;
+  }
+
+  .nav-menu .nav-link {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+/* Smartphone (480px and below) */
+@media (max-width: 480px) {
+  /* Reduce padding for the banner */
+  #banner {
+    padding: 30px 10px;
+  }
+
+  /* Navbar: make links more compact */
+  .nav-menu .nav-link {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  /* Additional tweaks if needed for extremely small devices */
+  body {
+    padding-top: 180px; /* Adjust padding for fixed elements */
+  }
+}
+
+/* Social Icons */
+.social-icons a {
+  font-size: 2rem;
+  color: #d1d1d1;
+  margin: 0 15px;
+  text-decoration: none; /* Rimuove qualsiasi sottolineatura */
+  line-height: 1; /* Allinea correttamente le icone */
+  display: inline-block; /* Garantisce una corretta visualizzazione */
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #00bcd4;
+}
+
+/* Animations */
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-title {
+  animation: fadeInSlideUp 1s ease-in-out;
+  font-family: 'Syne Mono', cursive; /* Applicato il nuovo font */
+  font-size: 3rem;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 0.5px #000;
+  padding: 10px;
+  border-radius: 10px;
+  position: inherit;
+  top: 50%; /* Centra verticalmente nel banner grande */
+  transform: translateY(-50%);
+  transition: top 0.5s ease-in-out;
+  overflow: hidden; /* Importante per nascondere il testo durante l'animazione */
+  white-space: nowrap; /* Impedisce al testo di andare a capo */
+  border-right: 2px solid #fff; /* Aggiunge una "barra" lampeggiante */
+  animation: typing 3.5s steps(40, end) 1, /* Animazione di scrittura (ripetuta 1 volta) */
+  blink-caret .75s step-end infinite; /* Animazione della barra (continua) */
+  font-family: 'Syne Mono', cursive;
+
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #fff; }
+}
+
+#banner.banner-shrink .animated-title {
+  top: 30px; /* Regola la posizione quando il banner si restringe */
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Footer */
+footer {
+  background-color: #2e2e3f;
+  color: #d1d1d1;
+  text-align: center;
+  padding: 8px 0; /* Riduce il padding verticale per rendere il footer più stretto */
+  width: 100%;
+  border-top: 2px solid #444;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+  position: inherit;
+}
+
+footer a {
+  color: #00bcd4;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
